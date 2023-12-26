@@ -19,8 +19,8 @@ const App: React.FC = () => {
       const res = (await result.json()) as { data: DisneyCharacter[] };
       setCharacters(res.data);
     };
-    getCharacters(2);
-  }, []);
+    getCharacters(currentPage);
+  }, [currentPage]);
 
   console.log(characters);
 
