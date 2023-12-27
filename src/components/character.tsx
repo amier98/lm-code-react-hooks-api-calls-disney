@@ -1,22 +1,24 @@
+import { useContext } from "react";
+import { FavouritesContext } from "../App";
 import { DisneyCharacter } from "../disney_character";
 
 interface CharacterProps {
   character: DisneyCharacter;
-  characterFavourites: Array<number>;
   updateFavourites: (fav: Array<number>) => void;
 }
 
 const Character: React.FC<CharacterProps> = ({
   character,
-  characterFavourites,
   updateFavourites,
 }) => {
+  const characterContext = useContext(FavouritesContext);
+
   function createFavourites(characterID: number) {
-    if (!characterFavourites.includes(characterID)) {
-      updateFavourites([...characterFavourites, characterID]);
+    if (!characterContext.includes(characterID)) {
+      updateFavourites([...characterContext, characterID]);
       console.log(characterID);
     } else {
-      const updateCharacter = characterFavourites.filter(
+      const updateCharacter = characterContext.filter(
         (id) => id !== characterID
       );
       updateFavourites(updateCharacter);
@@ -31,7 +33,7 @@ const Character: React.FC<CharacterProps> = ({
         className="card__button "
         onClick={() => createFavourites(character._id)}
       >
-        {!characterFavourites.includes(character._id)
+        {!characterContext.includes(character._id)
           ? "Add to favourites"
           : "Favourited"}
       </button>

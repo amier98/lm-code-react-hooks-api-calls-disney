@@ -5,6 +5,8 @@ import CharacterContainer from "./components/character_container";
 import Navigation from "./components/navigation";
 import { DisneyCharacter } from "./disney_character";
 
+export const FavouritesContext = React.createContext<number[]>([]);
+
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
 
@@ -30,13 +32,14 @@ const App: React.FC = () => {
 
   return (
     <div className="page">
-      <Header currentPage={currentPage} />
-      <Navigation currentPage={currentPage} setCurrentPage={setCurrentPage} />
-      <CharacterContainer
-        characters={characters}
-        characterFavourites={characterFavourites}
-        updateFavourites={setCharacterFavourites}
-      />
+      <FavouritesContext.Provider value={characterFavourites}>
+        <Header currentPage={currentPage} />
+        <Navigation currentPage={currentPage} setCurrentPage={setCurrentPage} />
+        <CharacterContainer
+          characters={characters}
+          updateFavourites={setCharacterFavourites}
+        />
+      </FavouritesContext.Provider>
     </div>
   );
 };
